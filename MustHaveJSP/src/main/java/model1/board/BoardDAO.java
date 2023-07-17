@@ -18,7 +18,8 @@ public class BoardDAO extends JDBCConnect {
 
 		String query = "SELECT COUNT(*) FROM board";
 		if (map.get("searchWord") != null) {
-			query += " WHERE " + map.get("searchField") + " " + " LIKE '%" + map.get("searchWord") + "%'";
+			query += " WHERE " + map.get("searchField") + " "
+					+ " LIKE '%" + map.get("searchWord") + "%'";
 		}
 
 		try {
@@ -39,7 +40,8 @@ public class BoardDAO extends JDBCConnect {
 
 		String query = "SELECT * FROM board ";
 		if (map.get("searchWord") != null) {
-			query += " WHERE " + map.get("searchField") + " " + " LIKE '%" + map.get("searchWord") + "%' ";
+			query += " WHERE " + map.get("searchField") + " "
+					+ " LIKE '%" + map.get("searchWord") + "%' ";
 		}
 		query += " ORDER BY num DESC";
 
@@ -88,5 +90,50 @@ public class BoardDAO extends JDBCConnect {
 		}
 
 		return result;
+	}
+
+	public BoardDTO selectView(String num) {
+		BoardDTO dto = new BoardDTO();
+
+		String query = "SELECT B.*, M.name "
+				+ " FROM member M INNER JOIN board B "
+				+ " ON M.id=B.id "
+				+ " WHERE num=?";
+
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, num);
+			rs = psmt.executeQuery();
+
+			if (rs.next()) {
+				dto.setNum(rs.getString(1));
+				dto.setTitle(rs.getString(2));
+				dto.setContent(rs.getString("content"));
+				dto.setPostdate(rs.getDate("postdate"));
+				dto.setId(rs.getString("id"));
+				dto.setVisitcount(rs.getString(6));
+				dto.setName(rs.getString("name"));
+			}
+		} catch (Exception e) {
+			System.out.println("게시물 상세보기 중 예외 발생");
+			e.printStackTrace();
+		}
+
+		return dto;
+	}
+
+	public void updateVisitCount(String num) {
+		String query = "UPDATE board SET "
+				+ " visitcount=visitcount+1 "
+				+ " WHERE num=?";
+
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, num);
+			psmt.executeQuery();
+		} catch (Exception e) {
+			System.out.println("게시물 조회수 증가 중 예외 발생");
+			e.printStackTrace();
+		}
 	}
 }
