@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 <title>회원제 게시판</title>
 <script type="text/javascript">
 	function validateForm(form) {
@@ -41,9 +42,9 @@
 			</tr>
 			<tr>
 				<td colspan="2" align="center">
-					<button type="submit">작성 완료</button>
-					<button type="reset">다시 입력</button>
-					<button type="button" onclick="location.href='List.jsp';">목록 보기</button>
+					<button type="submit" class="btn btn-success">작성 완료</button>
+					<button type="reset"  class="btn btn-warning">다시 입력</button>
+					<button type="button" class="btn btn-dark" onclick="location.href='List.jsp';">목록 보기</button>
 				</td>
 			</tr>
 		</table>
