@@ -71,9 +71,13 @@ public class BoardDAO extends JDBCConnect {
 		int result = 0;
 
 		try {
-			String query = "INSERT INTO board (" + "num, title, content, id, visitcount) " + " VALUES ("
+			String query = "INSERT INTO board ("
+					+ "num, title, content, id, visitcount) "
+					+ " VALUES ("
 					+ "seq_board_num.NEXTVAL, ?, ?, ?, 0)";
 
+			System.out.println("QUERY : " + query);
+			
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, dto.getTitle());
 			psmt.setString(2, dto.getContent());
@@ -130,28 +134,44 @@ public class BoardDAO extends JDBCConnect {
 
 	public int updateEdit(BoardDTO dto) {
 		int result = 0;
-		
+
 		try {
-			String query = "UPDATE board SET "
-					+ " title=?, content=? "
-					+ " WHERE num=?";
-			
+			String query = "UPDATE board SET " + " title=?, content=? " + " WHERE num=?";
+
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, dto.getTitle());
 			psmt.setString(2, dto.getContent());
 			psmt.setString(3, dto.getNum());
-			
+
 			System.out.println("updateEdit ----------");
 			System.out.println("getTitle : [" + dto.getTitle() + "]");
 			System.out.println(dto.getContent());
 			System.out.println(dto.getNum());
-			
+
 			result = psmt.executeUpdate();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			System.out.println("게시물 수정 중 예외 발생");
 			e.printStackTrace();
 		}
-		
+
+		return result;
+	}
+
+	public int deletePost(BoardDTO dto) {
+		int result = 0;
+
+		try {
+			String query = "DELETE FROM board WHERE num=?";
+
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, dto.getNum());
+
+			result = psmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("게시물 삭제 중 예외 발생");
+			e.printStackTrace();
+		}
+
 		return result;
 	}
 }

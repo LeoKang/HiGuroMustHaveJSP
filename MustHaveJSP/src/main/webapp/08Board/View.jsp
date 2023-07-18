@@ -16,7 +16,13 @@ dao.close();
 <title>회원제 게시판</title>
 <script>
 	function deletePost() {
-
+		var confirmed = confirm("정말로 삭제하겠습니까?");
+		if(confirmed) {
+			var form = document.writeFrm;
+			form.method = "post";
+			form.action = "DeleteProcess.jsp";
+			form.submit();
+		}
 	}
 </script>
 </head>
@@ -44,8 +50,7 @@ dao.close();
 			</tr>
 			<tr>
 				<td>내용</td>
-				<td colspan="3" height="100">
-					<%=dto.getContent().replace("\r\n", "<br>")%></td>
+				<td colspan="3" height="100"><%=dto.getContent().replace("\r\n", "<br>")%></td>
 			</tr>
 			<tr>
 				<td colspan="4" align="center">
@@ -55,8 +60,7 @@ dao.close();
 					%>
 					<button type="button"
 						onclick="location.href='Edit.jsp?num=<%=dto.getNum()%>';">수정하기</button>
-					<button type="button" onclick="deletePost();">삭제하기</button>
-<%
+					<button type="button" onclick="deletePost();">삭제하기</button> <%
  }
  %>
 					<button type="button" onclick="location.href='List.jsp';">목록보기</button>
