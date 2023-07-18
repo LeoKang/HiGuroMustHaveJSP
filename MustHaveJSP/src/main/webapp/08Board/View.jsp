@@ -44,12 +44,14 @@ dao.close();
 			</tr>
 			<tr>
 				<td>내용</td>
-				<td colspan="3" height="100"><%=dto.getContent().replace("\r\n", "<br>")%></td>
+				<td colspan="3" height="100">
+					<%=dto.getContent().replace("\r\n", "<br>")%></td>
 			</tr>
 			<tr>
 				<td colspan="4" align="center">
 					<%
-					if (session.getAttribute("UserId") != null && session.getAttribute("UserId").toString().equals(dto.getId())) {
+					if (session.getAttribute("UserId") != null
+					&& session.getAttribute("UserId").toString().equals(dto.getId())) {
 					%>
 					<button type="button"
 						onclick="location.href='Edit.jsp?num=<%=dto.getNum()%>';">수정하기</button>

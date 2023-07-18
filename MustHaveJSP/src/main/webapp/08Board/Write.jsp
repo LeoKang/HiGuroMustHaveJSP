@@ -25,7 +25,7 @@
 <body>
 	<jsp:include page="../Common/Link.jsp"/>
 	<h2>회원제 게시판 - 글쓰기(Write)</h2>
-	<form name="writeFrm" method="post" action="WriteProcess.jsp" onsubmit="reuturn validateForm(this);">
+	<form name="writeFrm" method="post" action="WriteProcess.jsp" onsubmit="return validateForm(this);">
 		<table border="1" width="90%">
 			<tr>
 				<td>제목</td>

@@ -18,8 +18,7 @@ public class BoardDAO extends JDBCConnect {
 
 		String query = "SELECT COUNT(*) FROM board";
 		if (map.get("searchWord") != null) {
-			query += " WHERE " + map.get("searchField") + " "
-					+ " LIKE '%" + map.get("searchWord") + "%'";
+			query += " WHERE " + map.get("searchField") + " " + " LIKE '%" + map.get("searchWord") + "%'";
 		}
 
 		try {
@@ -40,8 +39,7 @@ public class BoardDAO extends JDBCConnect {
 
 		String query = "SELECT * FROM board ";
 		if (map.get("searchWord") != null) {
-			query += " WHERE " + map.get("searchField") + " "
-					+ " LIKE '%" + map.get("searchWord") + "%' ";
+			query += " WHERE " + map.get("searchField") + " " + " LIKE '%" + map.get("searchWord") + "%' ";
 		}
 		query += " ORDER BY num DESC";
 
@@ -73,9 +71,7 @@ public class BoardDAO extends JDBCConnect {
 		int result = 0;
 
 		try {
-			String query = "INSERT INTO board ("
-					+ "num, title, content, id, visitcount) "
-					+ " VALUES ("
+			String query = "INSERT INTO board (" + "num, title, content, id, visitcount) " + " VALUES ("
 					+ "seq_board_num.NEXTVAL, ?, ?, ?, 0)";
 
 			psmt = con.prepareStatement(query);
@@ -95,10 +91,7 @@ public class BoardDAO extends JDBCConnect {
 	public BoardDTO selectView(String num) {
 		BoardDTO dto = new BoardDTO();
 
-		String query = "SELECT B.*, M.name "
-				+ " FROM member M INNER JOIN board B "
-				+ " ON M.id=B.id "
-				+ " WHERE num=?";
+		String query = "SELECT B.*, M.name " + " FROM member M INNER JOIN board B " + " ON M.id=B.id " + " WHERE num=?";
 
 		try {
 			psmt = con.prepareStatement(query);
@@ -123,9 +116,7 @@ public class BoardDAO extends JDBCConnect {
 	}
 
 	public void updateVisitCount(String num) {
-		String query = "UPDATE board SET "
-				+ " visitcount=visitcount+1 "
-				+ " WHERE num=?";
+		String query = "UPDATE board SET " + " visitcount=visitcount+1 " + " WHERE num=?";
 
 		try {
 			psmt = con.prepareStatement(query);
@@ -135,5 +126,32 @@ public class BoardDAO extends JDBCConnect {
 			System.out.println("게시물 조회수 증가 중 예외 발생");
 			e.printStackTrace();
 		}
+	}
+
+	public int updateEdit(BoardDTO dto) {
+		int result = 0;
+		
+		try {
+			String query = "UPDATE board SET "
+					+ " title=?, content=? "
+					+ " WHERE num=?";
+			
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, dto.getTitle());
+			psmt.setString(2, dto.getContent());
+			psmt.setString(3, dto.getNum());
+			
+			System.out.println("updateEdit ----------");
+			System.out.println("getTitle : [" + dto.getTitle() + "]");
+			System.out.println(dto.getContent());
+			System.out.println(dto.getNum());
+			
+			result = psmt.executeUpdate();
+		}catch(Exception e) {
+			System.out.println("게시물 수정 중 예외 발생");
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 }
