@@ -37,7 +37,7 @@
 			<td><%= f.getOfile() %></td>
 			<td><%= f.getSfile() %></td>
 			<td><%= f.getPostdate() %></td>
-			<td><a href="Download.jsp?oName<%=URLEncoder.encode(f.getOfile(), "UTF-8")%>
+			<td><a href="Download.jsp?oName=<%=URLEncoder.encode(f.getOfile(), "UTF-8")%>
 			&sName=<%=URLEncoder.encode(f.getSfile(), "UTF-8")%>">[다운로드]</a></td>
 		</tr>
 		<%}%>
